@@ -4,7 +4,7 @@ import perflex.statkind._
 
 class TimeSummary[K <: Time] extends Reporter[K] {
   override def report(result: Seq[Option[K]]): String = {
-    val times = result.filter(a => a.isDefined).map(_.get.time)
+    val times = result.filter(_.isDefined).map(_.get.time)
     val bui = new StringBuilder
     bui.append("Summary:\n")
     if (times.isEmpty) {
@@ -18,7 +18,7 @@ class TimeSummary[K <: Time] extends Reporter[K] {
     bui.append(  s"Slowest:      $slowest\n")
     bui.append(  s"Fastest:      $fastest\n")
     bui.append(  s"Average:      $average\n")
-    bui.append(  s"Requests/sec: ${1 / average}\n")
+    // bui.append(  s"Requests/sec: ${1 / average}\n")
     bui.result
   }
 }

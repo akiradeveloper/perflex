@@ -17,7 +17,7 @@ case class Range(min: Float, max: Float) {
 
 class TimeDistribution[K <: Time] extends Reporter[K] {
   override def report(result: Seq[Option[K]]): String = {
-    val times: Seq[Float] = result.filter(_.isDefined).map(_.get.time.toFloat)
+    val times: Seq[Float] = result.filter(_.isDefined).map(_.get.time)
     val bui = new StringBuilder
     bui.append("Response time histogram:\n")
     if (times.isEmpty) {

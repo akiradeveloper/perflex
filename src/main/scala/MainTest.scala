@@ -4,7 +4,7 @@ import scala.util.Random
 
 object MainTest extends App {
 
-  case class MyType(time: Long, statusCode: Int) extends Object
+  case class MyType(time: Float, statusCode: Int) extends Object
   with statkind.Time
   with statkind.StatusCode
 

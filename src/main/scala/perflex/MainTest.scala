@@ -1,6 +1,5 @@
-package perflex
-
-import perflex.reporter._
+import perflex.{ReportMaker, Runner}
+import perflex._
 
 object MainTest extends App {
 
@@ -8,18 +7,20 @@ object MainTest extends App {
   with statkind.Time
   with statkind.StatusCode
 
-  val tasks: Seq[Any => MyType] = Seq(
+  val tasks = Stream(
     (a: Any) => MyType(777, 200)
   )
 
-  val runner = new Runner().concurrentNumber(8)
-  val result: Seq[Option[MyType]] = runner.run(tasks)
+  val runner = new Runner(tasks).concurrentNumber(8)
+  val result = runner.run
 
-  val reporter = new ReportMaker[MyType](Seq(
-    new TimeSummary,
-    new TimeDistribution,
-    new StatusCodeStat
-  ))
+  val report = new ReportMaker(result).make(
+    Seq(
+      new reporter.TimeSummary,
+      new reporter.TimeDistribution,
+      new reporter.StatusCodeStat
+    )
+  )
 
-  println(reporter.make(result))
+  println(report)
 }

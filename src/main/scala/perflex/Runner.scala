@@ -1,6 +1,7 @@
 package perflex
 
-class Runner {
+class Runner[K](tasks: Seq[_ => K]) {
   def concurrentNumber(n: Int): this.type = this
-  def run[K](tasks: Seq[Any => K]): Seq[Option[K]] = Seq()
+
+  def run: Seq[Option[K]] = Seq() // tmp
 }

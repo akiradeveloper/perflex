@@ -1,4 +1,3 @@
-import perflex.reporter.SuccessStat
 import perflex.{ReportMaker, Runner, _}
 
 import scala.util.Random
@@ -22,7 +21,7 @@ object MainTest extends App {
 
   val report = new ReportMaker(result).make(
     Seq(
-      new SuccessStat,
+      new reporter.SuccessStat,
       new reporter.TimeSummary,
       new reporter.TimeDistribution,
       new reporter.StatusCodeStat

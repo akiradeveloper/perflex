@@ -41,7 +41,7 @@ class TimeDistribution[K <: Time] extends Reporter[K] {
       1.0
     }
     ranges.foreach { range =>
-      bui.append(s"  ${"%11f".format(range.median)} ${"[%10d]".format(range.count)} | ${List.fill((range.count / descaler).toInt)("*").mkString}\n")
+      bui.append(s"  ${"%11f".format(range.median)} ${"[%10d]".format(range.count)} | ${List.fill((range.count / descaler).toInt)("∎").mkString}\n")
     }
     bui.result
   }

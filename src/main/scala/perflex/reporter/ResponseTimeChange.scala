@@ -33,7 +33,7 @@ class ResponseTimeChange[K <: Time] extends Reporter[K] {
     }
     bar.map {
       case Some(a) => {
-        Seq.fill(a-1)(" ").mkString + "."
+        Seq.fill(a-1)(" ").mkString + "*"
       }
       case None => { "" }
     }.foreach { a => bui.append("  |" + a + "\n") }

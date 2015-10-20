@@ -15,10 +15,10 @@ class TimeSummary[K <: Time] extends Reporter[K] {
     val slowest = times.max
     val total = times.sum
     val average = total.toFloat / times.length
-    bui.append(  s"Total:        $total\n")
-    bui.append(  s"Slowest:      $slowest\n")
-    bui.append(  s"Fastest:      $fastest\n")
-    bui.append(  s"Average:      $average\n")
+    bui.append(s"  Total:        $total\n")
+    bui.append(s"  Slowest:      $slowest\n")
+    bui.append(s"  Fastest:      $fastest\n")
+    bui.append(s"  Average:      $average\n")
     // bui.append(  s"Requests/sec: ${1 / average}\n")
     bui.result
   }

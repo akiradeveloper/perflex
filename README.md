@@ -12,10 +12,10 @@ Success/Failure:
   Failure: 1
 
 Summary:
-Total:        488163
-Slowest:      998
-Fastest:      1
-Average:      486.21814
+  Total:        488163
+  Slowest:      998
+  Fastest:      1
+  Average:      486.21814
 
 Response time histogram:
     50.849998 [       107] | ∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎

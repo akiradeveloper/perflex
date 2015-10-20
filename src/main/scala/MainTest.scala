@@ -1,5 +1,4 @@
-import perflex.{ReportMaker, Runner}
-import perflex._
+import perflex.{ReportMaker, Runner, _}
 
 object MainTest extends App {
 
@@ -8,7 +7,9 @@ object MainTest extends App {
   with statkind.StatusCode
 
   val tasks = Stream(
-    (a: Any) => MyType(777, 200)
+    (_: Any) => MyType(111, 200),
+    (_: Any) => MyType(222, 403),
+    (_: Any) => { assert(false); MyType(333, 200) }
   )
 
   val runner = new Runner(tasks).concurrentNumber(8)

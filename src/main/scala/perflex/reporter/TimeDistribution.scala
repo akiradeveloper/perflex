@@ -21,7 +21,8 @@ class TimeDistribution[K <: Time] extends Reporter[K] {
     val bui = new StringBuilder
     bui.append("Response time histogram:\n")
     if (times.isEmpty) {
-      return "No valid response was made"
+      bui.append("  No valid response was made\n")
+      return bui.result
     }
     val N = Math.min(times.length, 10)
     val min = times.min

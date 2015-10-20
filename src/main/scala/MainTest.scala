@@ -16,14 +16,16 @@ object MainTest extends App {
     (_: Any) => { assert(false); MyType(333, 200) }
   )
 
-  val runner = new Runner(tasks).concurrentNumber(8)
-  val result = runner.run
+  val result = new Runner(tasks)
+    .concurrentNumber(8)
+    .run
 
   val report = new ReportMaker(result).make(
     Seq(
       new reporter.SuccessStat,
       new reporter.TimeSummary,
       new reporter.TimeDistribution,
+      new reporter.ResponseTimeChange,
       new reporter.StatusCodeStat
     )
   )

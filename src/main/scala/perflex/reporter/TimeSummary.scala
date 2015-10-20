@@ -8,7 +8,8 @@ class TimeSummary[K <: Time] extends Reporter[K] {
     val bui = new StringBuilder
     bui.append("Summary:\n")
     if (times.isEmpty) {
-      return "  No valid response was made"
+      bui.append("  No valid response was made\n")
+      return bui.result
     }
     val fastest = times.min
     val slowest = times.max

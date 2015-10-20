@@ -15,12 +15,11 @@ object MainTest extends App {
   val runner = new Runner().concurrentNumber(8)
   val result: Seq[Option[MyType]] = runner.run(tasks)
 
-  val reporters = Seq(
-    new TimeSummary[MyType],
-    new TimeDistribution[MyType],
-    new StatusCodeStat[MyType]
-  )
-  val reporter = new ReportMaker[MyType](reporters)
+  val reporter = new ReportMaker[MyType](Seq(
+    new TimeSummary,
+    new TimeDistribution,
+    new StatusCodeStat
+  ))
 
   println(reporter.make(result))
 }

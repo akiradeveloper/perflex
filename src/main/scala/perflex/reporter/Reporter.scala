@@ -1,5 +1,7 @@
 package perflex.reporter
 
+import perflex.Runner
+
 trait Reporter[K] {
-  def report(result: Seq[Option[K]]): String
+  def report(result: Runner[K]#Result): String
 }

@@ -1,5 +1,6 @@
 package perflex.reporter
 
+import perflex.Runner
 import perflex.statkind.Time
 
 case class Range(min: Float, max: Float) {
@@ -16,8 +17,8 @@ case class Range(min: Float, max: Float) {
 }
 
 class TimeDistribution[K <: Time] extends Reporter[K] {
-  override def report(result: Seq[Option[K]]): String = {
-    val times: Seq[Float] = result.filter(_.isDefined).map(_.get.time)
+  override def report(result: Runner[K]#Result): String = {
+    val times: Seq[Float] = result.result.filter(_.isDefined).map(_.get.time)
     val bui = new StringBuilder
     bui.append("Response time histogram:\n")
     if (times.isEmpty) {

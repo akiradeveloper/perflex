@@ -1,12 +1,13 @@
 package perflex.reporter
 
+import perflex.Runner
 import perflex.statkind._
 import scala.collection.mutable
 
 class StatusCodeStat[K <: StatusCode] extends Reporter[K] {
-  override def report(result: Seq[Option[K]]): String = {
+  override def report(result: Runner[K]#Result): String = {
     val m = new mutable.HashMap[Int, Int]
-    result.foreach {
+    result.result.foreach {
       case Some(a) => m(a.statusCode) = m.getOrElse(a.statusCode, 0) + 1
       case _ => {}
     }

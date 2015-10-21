@@ -1,3 +1,6 @@
+import java.util.concurrent.TimeUnit
+
+import com.google.common.base.Stopwatch
 import perflex.{ReportMaker, Runner, _}
 
 import scala.util.Random
@@ -18,9 +21,12 @@ object Fake extends App {
       (_: Any) => { assert(false); MyType(333, 200) }
     )
 
+  val sw = Stopwatch.createStarted
   val result = new Runner(tasks)
-    .concurrentNumber(8)
+    .concurrentNumber(16)
     .run
+  sw.stop
+  println(sw.elapsed(TimeUnit.NANOSECONDS))
 
   val report = new ReportMaker(result)
     .withReporters(Seq(

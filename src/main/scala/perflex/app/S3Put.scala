@@ -25,33 +25,40 @@ object S3Put extends App {
 
   val parser = new scopt.OptionParser[Config]("MakeUser") {
     arg[String]("<endpoint>") action { (x, c) => c.copy(endpoint = x) } text("e.g. http://localhost:8080")
-    arg[String]("<bucketName>") action { (x, c) => c.copy(bucketName = x) }
+    opt[String]("bucketName") action { (x, c) => c.copy(bucketName = x) }
     opt[String]("accessKey") action { (x, c) => c.copy(accessKey = x) }
     opt[String]("secretKey") action { (x, c) => c.copy(secretKey = x) }
     opt[Int]("fileSize") action { (x, c) => c.copy(fileSize = x) }
   }
   def run(config: Config) {
-    case class Type(time: Float) extends Time
-
-    // make a random file
-    val tmpFileName = "/tmp/perflex-file"
-    Files.deleteIfExists(Paths.get(tmpFileName))
-    val p = Files.createFile(Paths.get(tmpFileName))
-    val bytes: Array[Byte] = Array.fill(config.fileSize)(127)
-    Files.write(p, bytes)
-    val file: File = p.toFile
-
-    val tasks = Stream.fill(10000) { (_:Any) =>
+    def createCli = {
       val conf = new ClientConfiguration
       conf.setSignerOverride("S3SignerType")
       val cli = new AmazonS3Client(new BasicAWSCredentials(config.accessKey, config.secretKey), conf)
       cli.setEndpoint(config.endpoint)
       cli.setS3ClientOptions(new S3ClientOptions().withPathStyleAccess(true))
+      cli
+    }
+
+    case class Type(time: Float) extends Time
+
+    // make a random file
+    val file = Utils.ensureFile("/tmp/perflex-file", config.fileSize).toFile
+
+    var bucketName = config.bucketName
+    if (bucketName == "") {
+      val cli = createCli
+      bucketName = Random.alphanumeric.take(20).mkString.toLowerCase
+      cli.createBucket(bucketName)
+    }
+
+    val tasks = Stream.fill(100) { (_: Unit) =>
+      val cli = createCli
       // randname
       val name = Random.alphanumeric.take(32).mkString
 
       val sw = Stopwatch.createStarted
-      cli.putObject(config.bucketName, name, file)
+      cli.putObject(bucketName, name, file)
       sw.stop
 
       Type(sw.elapsed(TimeUnit.MICROSECONDS).toFloat)

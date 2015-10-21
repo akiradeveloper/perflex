@@ -22,15 +22,15 @@ object Fake extends App {
     .concurrentNumber(8)
     .run
 
-  val report = new ReportMaker(result).make(
-    Seq(
+  val report = new ReportMaker(result)
+    .withReporters(Seq(
       new reporter.SuccessStat,
       new reporter.TimeSummary,
       new reporter.TimeDistribution,
-      new reporter.ResponseTimeChange,
-      new reporter.StatusCodeStat
-    )
-  )
+      new reporter.ResponseTimeChange
+    ))
+    .withReporters(reporter.StatusCodeAll)
+    .make
 
   println(report)
 }

@@ -60,9 +60,10 @@ object S3Get extends App {
     val tasks = Stream.fill(1000) { (_: Unit) =>
       val cli = createCli
       val sw = Stopwatch.createStarted
-      cli.getObject(bucketName, keyName)
+      val obj = cli.getObject(bucketName, keyName)
       sw.stop
 
+      obj.close
       Type(sw.elapsed(TimeUnit.MICROSECONDS).toFloat)
     }
 

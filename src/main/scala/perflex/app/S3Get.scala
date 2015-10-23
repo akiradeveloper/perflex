@@ -67,7 +67,7 @@ object S3Get extends App {
       Type(sw.elapsed(TimeUnit.MICROSECONDS).toFloat)
     }
 
-    val result = new Runner(tasks).concurrentNumber(8).run
+    val result = new Runner(tasks).concurrentNumber(100).run
 
     val report = new ReportMaker(result)
       .withReporters(reporter.TimeAll)

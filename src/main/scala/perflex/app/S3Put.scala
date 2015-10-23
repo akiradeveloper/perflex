@@ -52,7 +52,7 @@ object S3Put extends App {
       cli.createBucket(bucketName)
     }
 
-    val tasks = Stream.fill(100) { (_: Unit) =>
+    val tasks = Stream.fill(1000) { (_: Unit) =>
       val cli = createCli
       // randname
       val name = Random.alphanumeric.take(32).mkString
@@ -64,7 +64,7 @@ object S3Put extends App {
       Type(sw.elapsed(TimeUnit.MICROSECONDS).toFloat)
     }
 
-    val result = new Runner(tasks).concurrentNumber(32).run
+    val result = new Runner(tasks).concurrentNumber(100).run
 
     val report = new ReportMaker(result)
       .withReporters(reporter.TimeAll)

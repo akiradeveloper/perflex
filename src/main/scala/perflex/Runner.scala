@@ -4,6 +4,7 @@ import java.util.concurrent.{TimeUnit, Executors}
 
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration.Duration
+import scala.util.{Try, Failure, Success}
 
 class Runner[K](tasks: Seq[Unit => K]) {
 
@@ -16,13 +17,12 @@ class Runner[K](tasks: Seq[Unit => K]) {
   def run = {
     implicit val executionContext = ExecutionContext.fromExecutorService(Executors.newFixedThreadPool(concurrentN))
     val start = System.currentTimeMillis
-    val rets = tasks.map { t =>
-      val fut = Future {
-        t.apply()
-      }
-      Await.ready(fut, Duration.Inf)
-      fut.value.get.toOption
-    }.toList
+    val futs =
+      Future.sequence(
+        tasks.map { t => Future { t.apply() } }
+        .map(_.map(Success(_)).recover { case e => Failure(e) })
+      )
+    val rets = Await.result(futs, Duration.Inf).map(_.toOption)
     val end = System.currentTimeMillis
     executionContext.shutdown
     Result(rets, end - start)

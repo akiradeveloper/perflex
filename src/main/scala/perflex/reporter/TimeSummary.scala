@@ -5,13 +5,10 @@ import perflex.statkind._
 
 class TimeSummary[K <: Time] extends Reporter[K] {
   override def report(result: Runner[K]#Result): String = {
-    val times = result.result.filter(_.isDefined).map(_.get.time)
+    val times = result.result.map(_.time)
     val bui = new StringBuilder
     bui.append("Summary:\n")
-    if (times.isEmpty) {
-      bui.append("  No valid response was made\n")
-      return bui.result
-    }
+
     val fastest = times.min
     val slowest = times.max
     val total = times.sum

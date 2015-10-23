@@ -18,13 +18,10 @@ case class Range(min: Float, max: Float) {
 
 class TimeDistribution[K <: Time] extends Reporter[K] {
   override def report(result: Runner[K]#Result): String = {
-    val times: Seq[Float] = result.result.filter(_.isDefined).map(_.get.time)
+    val times: Seq[Float] = result.result.map(_.time)
     val bui = new StringBuilder
     bui.append("Response time histogram:\n")
-    if (times.isEmpty) {
-      bui.append("  No valid response was made\n")
-      return bui.result
-    }
+
     val N = Math.min(times.length, 10)
     val min = times.min
     val max = times.max

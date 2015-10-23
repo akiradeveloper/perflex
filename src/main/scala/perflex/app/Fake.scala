@@ -17,8 +17,7 @@ object Fake extends App {
       (_: Any) => MyType(111, 201),
       (_: Any) => MyType(222, 403),
       (_: Any) => MyType(2, 403),
-      (_: Any) => MyType(3, 403),
-      (_: Any) => { assert(false); MyType(333, 200) }
+      (_: Any) => MyType(3, 403)
     )
 
   val result = new Runner(tasks)
@@ -27,7 +26,6 @@ object Fake extends App {
 
   val report = new ReportMaker(result)
     .withReporters(Seq(
-      new reporter.SuccessStat,
       new reporter.TimeSummary,
       new reporter.TimeDistribution,
       new reporter.ResponseTimeChange

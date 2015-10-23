@@ -6,7 +6,7 @@ import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration.Duration
 import scala.util.{Try, Failure, Success}
 
-class Runner[K](tasks: Seq[Unit => K]) {
+class Runner[K](tasks: Seq[Function0[K]]) {
 
   case class Result(result: Seq[K], execTime: Long)
 

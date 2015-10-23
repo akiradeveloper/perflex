@@ -52,7 +52,7 @@ object S3Put extends App {
       cli.createBucket(bucketName)
     }
 
-    val tasks = Stream.fill(1000) { (_: Unit) =>
+    val tasks = Stream.fill(1000) { () =>
       val cli = createCli
       // randname
       val name = Random.alphanumeric.take(32).mkString

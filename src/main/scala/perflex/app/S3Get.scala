@@ -57,7 +57,7 @@ object S3Get extends App {
       cli.putObject(bucketName, keyName, Utils.ensureFile("/tmp/perflex-file", 4096).toFile)
     }
 
-    val tasks = Stream.fill(1000) { (_: Unit) =>
+    val tasks = Stream.fill(1000) { () =>
       val cli = createCli
       val sw = Stopwatch.createStarted
       val obj = cli.getObject(bucketName, keyName)

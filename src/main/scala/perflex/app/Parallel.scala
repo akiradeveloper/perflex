@@ -6,7 +6,7 @@ import scala.util.Random
 
 object Parallel extends App {
   val tasks =
-    Stream.fill(1000) { (_:Any) =>
+    Stream.fill(1000) { () =>
       val rand = Random.alphanumeric.take(5).mkString
       println("start - " + rand)
       Thread.sleep(100)

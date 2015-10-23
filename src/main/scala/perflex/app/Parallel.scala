@@ -13,7 +13,15 @@ object Parallel extends App {
       println("end   - " + rand)
     }
 
+  val start = System.currentTimeMillis
   val result = new Runner(tasks)
     .concurrentNumber(100)
     .run
+  val end = System.currentTimeMillis
+
+  // N
+  // 10 -> 10000 msec
+  // 100 -> 1200 msec
+  // 1000 -> 400 msec
+  println(s"${end - start} msec")
 }

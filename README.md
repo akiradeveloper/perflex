@@ -1,16 +1,19 @@
 # perflex [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/akiradeveloper/perflex?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-## Motivation
+[() -> Stat] -> Runner -> ReportMaker [Reporter] -> Report
 
-* boom is a good tool but what about systems like S3 that needs special authentication?  
+The type signature tells everything you can do with perflex.
+All you need to do is define a sequence of tasks each returns meaningful statistics about the run.
+
+## Concept
+
+* There exists [boom](https://github.com/rakyll/boom) but what if testing systems like S3 that requires special authentication?  
+* More flexible benchmark framework that executes any work you define in configurable concurrency.  
+* Make reports like boom but you can define and append your own new report generator.  
 
 ## Output Example
 
 ```
-Success/Failure:
-  Success: 1000
-  Failure: 0
-
 Summary:
   Total:   18262 msec
   Slowest: 71756.0
@@ -54,4 +57,5 @@ Response time change:
 
 ## Developer
 
-Akira Hayakawa (ruby.wktk@gmail.com)
+Akira Hayakawa (@akiradeveloper)  
+e-mail: ruby.wktk@gmail.com)

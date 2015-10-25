@@ -36,6 +36,7 @@ object S3Get extends App {
     def createCli = {
       val conf = new ClientConfiguration
       conf.setSignerOverride("S3SignerType")
+      conf.setSocketTimeout(0)
       val cli = new AmazonS3Client(new BasicAWSCredentials(config.accessKey, config.secretKey), conf)
       cli.setEndpoint(config.endpoint)
       cli.setS3ClientOptions(new S3ClientOptions().withPathStyleAccess(true))
